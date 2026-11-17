@@ -376,6 +376,8 @@ enum LayoutDetector {
               prevLower.allSatisfy(Self.isLayoutLetter), curLower.allSatisfy(Self.isLayoutLetter) else { return .keep }
         let cyr = prevLower.hasCyrillic
         guard cyr == curLower.hasCyrillic, cyr != prevLower.hasLatinLetter else { return .keep }
+        // Личный файл (`keep`): однобуквенное первое слово, записанное пользователем, в пару не переключаем.
+        if prevLower.count == 1, ExceptionStore.shared.isPersonalKeep(prevLower) { return .keep }
         let data = LayoutData.shared
         let ownDict = cyr ? data.wordsRu : data.wordsEn
         let targetDict = cyr ? data.wordsEn : data.wordsRu

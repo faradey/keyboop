@@ -134,6 +134,11 @@ final class ExceptionStore {
         forceSwap.formUnion(personalForceSwap)
     }
 
+    /// Слово записано в личном файле как `keep`. Нужно правилу пары для однобуквенного первого слова.
+    func isPersonalKeep(_ word: String) -> Bool {
+        personalIgnored.contains(word)
+    }
+
     /// Удалить одно слово из исключений (крестик на чипе).
     func removeIgnored(_ word: String) { ignored.remove(word.lowercased()); save() }
 
